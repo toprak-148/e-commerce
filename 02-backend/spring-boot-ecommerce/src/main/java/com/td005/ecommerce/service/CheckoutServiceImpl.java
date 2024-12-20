@@ -9,11 +9,13 @@ import com.td005.ecommerce.entity.OrderItem;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.UUID;
 
 @Data
+@Service
 public class CheckoutServiceImpl implements CheckoutService{
 
     private CustomerRepository customerRepository;

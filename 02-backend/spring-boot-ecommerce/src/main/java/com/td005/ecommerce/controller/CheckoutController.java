@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("api/checkout")
+@RequestMapping("/api/checkout")
 public class CheckoutController {
 
     private CheckoutService checkoutService;
@@ -26,18 +26,5 @@ public class CheckoutController {
         PurchaseResponse purchaseResponse = checkoutService.placeOrder((purchase));
         return purchaseResponse;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
