@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Country } from 'src/app/common/country';
 import { State } from 'src/app/common/state';
+import { CartService } from 'src/app/services/cart.service';
 import { Td005ShopFormService } from 'src/app/services/td005-shop-form.service';
 import { TD005Validators } from 'src/app/validators/td005-validators';
 
@@ -28,10 +29,14 @@ export class CheckoutComponent implements OnInit {
 
   //depedency injection
   constructor(private formBuilder:FormBuilder,
-              private td005FormService:Td005ShopFormService
+              private td005FormService:Td005ShopFormService,
+              private cartService:CartService
   ) { }
 
   ngOnInit(): void {
+
+    this.reviewCartDetails();
+
     this.checkoutFormGroup = this.formBuilder.group({
       customer:this.formBuilder.group({
         firstName:new FormControl('', [Validators.required,Validators.minLength(2),TD005Validators.notOnlyWhitespace] ),
@@ -98,6 +103,17 @@ export class CheckoutComponent implements OnInit {
     )
 
   }
+  reviewCartDetails() {
+    //subscribe to cardService.totalQuintity
+    this.cartService.totalQuantity.subscribe(
+      totalQuintity => this.totalQuintity = totalQuintity
+    );
+
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    )
+  }
+
 
   onSubmit()
   {
@@ -121,6 +137,7 @@ export class CheckoutComponent implements OnInit {
   get firstName(){ return this.checkoutFormGroup.get('customer.firstName'); }
   get lastName(){ return this.checkoutFormGroup.get('customer.lastName'); }
   get email(){ return this.checkoutFormGroup.get('customer.email'); }
+
 
   //!shippingAddress
   get shippingAddressStreet(){ return this.checkoutFormGroup.get('shippingAddress.street'); }

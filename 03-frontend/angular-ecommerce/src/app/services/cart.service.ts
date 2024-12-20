@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '../common/cart-item';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { unwatchFile } from 'fs';
 import { TypeModifier } from '@angular/compiler';
 
@@ -10,8 +10,9 @@ import { TypeModifier } from '@angular/compiler';
 export class CartService {
 
   cardItems:CartItem[] = [];
-  totalPrice:Subject<number> = new Subject<number>();
-  totalQuantity:Subject<number> = new Subject<number>();
+  totalPrice:Subject<number> = new BehaviorSubject<number>(0);
+  totalQuantity:Subject<number> = new BehaviorSubject<number>(0);
+
 
 
 
@@ -139,8 +140,6 @@ export class CartService {
         this.computeCartTotals();
       }
   }
-
-
 
 
 }
