@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import {HttpClientModule} from '@angular/common/http';
 import { ProductService } from './services/product.service';
-import { Routes,RouterModule } from '@angular/router';
+import { Routes,RouterModule, Router } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
@@ -22,7 +22,8 @@ import { LoginStatusComponent } from './components/login-status/login-status.com
 import{
   OktaAuthModule,
   OktaCallbackComponent,
-  OKTA_CONFIG
+  OKTA_CONFIG,
+  OktaAuthGuard
 }from '@okta/okta-angular'
 
 import { OktaAuth } from '@okta/okta-auth-js';
@@ -32,9 +33,20 @@ import { MembersPageComponent } from './components/members-page/members-page.com
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
 
+function sendTopLoginPage(oktaAuth:OktaAuth,injector:Injector){
+  // Use injector to access any service available within your application
+  const router = injector.get(Router);
+
+  // Redirect the user to your custom login page
+  router.navigate(['/login']);
+
+
+
+}
+
 //Rotaları belirtmek
 const routes : Routes=[
-
+    {path:'members',component:MembersPageComponent,canActivate:[OktaAuthGuard] , data:{onAuthRequired:sendTopLoginPage}},
     {path:'login/callback',component:OktaCallbackComponent},
     {path:'login',component:LoginComponent},
     {path:"products/:id",component:ProductDetailsComponent},
