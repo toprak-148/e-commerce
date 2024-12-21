@@ -2,7 +2,6 @@ package com.td005.ecommerce.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Cleanup;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
