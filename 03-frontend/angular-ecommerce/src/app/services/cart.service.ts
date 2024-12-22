@@ -13,7 +13,9 @@ export class CartService {
   totalPrice:Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity:Subject<number> = new BehaviorSubject<number>(0);
 
-  storage : Storage|any= sessionStorage;
+  // storage : Storage|any= sessionStorage;
+  storage :Storage |any = localStorage;
+
 
 
 
@@ -87,12 +89,6 @@ export class CartService {
       // compute cart total price and total total quantity
 
       this.computeCartTotals();
-
-
-
-
-
-
   }
 
 
@@ -119,7 +115,13 @@ export class CartService {
     //log cart data just for debugging purpose
     this.logCartData(totalPriceValue,totalQuantityValue);
 
+
+    // persist cart data
+    this.persisteCartItems();
+
+
   }
+
 
   persisteCartItems(){
     this.storage.setItem('cartItem',JSON.stringify(this.cardItems));
