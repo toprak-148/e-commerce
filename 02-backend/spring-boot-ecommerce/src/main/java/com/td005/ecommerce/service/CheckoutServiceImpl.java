@@ -8,7 +8,6 @@ import com.td005.ecommerce.entity.Order;
 import com.td005.ecommerce.entity.OrderItem;
 import jakarta.transaction.Transactional;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -53,7 +52,7 @@ public class CheckoutServiceImpl implements CheckoutService{
         Customer customerFromDB = customerRepository.findByEmail(theEmail);
         if(customerFromDB != null)
             customer = customerFromDB;
-        
+
 
 
         customer.add(order);
